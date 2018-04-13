@@ -1,0 +1,26 @@
+[
+    {
+        "className": "viewer.components.voertuiglocaties",
+        "name": "voertuiglocaties",
+        "shortName": "VL",
+        "sources": [
+            "Component.js",
+            "voertuiglocaties.js",
+            "incidents/Incidents.js",
+            "incidents/FalckIncidentsController.js",
+            "incidents/FalckVehicleController.js",
+            "incidents/VehiclePositionLayer.js",
+            "incidents/IncidentMarkerLayer.js"
+        ],
+        "configSource": ["ConfigObject.js", "SelectionWindowConfig.js", "voertuiglocaties-config.js"],
+        "closureCompilerSafe": true,
+        "notInCombinationWith": [
+            "viewer.mapcomponents.FlamingoMap"
+        ],
+
+        "restrictions": ["left_menu"],
+        "type": "popup",
+        "singleton": true,
+        "showHelp": true
+    }
+]
