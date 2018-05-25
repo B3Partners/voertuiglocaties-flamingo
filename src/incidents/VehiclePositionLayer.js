@@ -82,8 +82,6 @@ Ext.define("viewer.voertuiglocaties.controllers.VehiclePositionLayer", {
 
         me.voertuiglocaties.map.addLayer(this.layer);
         me.voertuiglocaties.map.addLayer(this.layer2);
-        this.layer.setZIndex(1001);
-        this.layer2.setZIndex(1001);
 
     },
 
@@ -104,5 +102,7 @@ Ext.define("viewer.voertuiglocaties.controllers.VehiclePositionLayer", {
             features2.push(f.clone());
         });
         this.layer2.addFeatures(features2);
+        this.layer.setZIndex(1001);
+        this.layer2.setZIndex(1001);
     }
 });
