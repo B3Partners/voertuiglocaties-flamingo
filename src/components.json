@@ -10,7 +10,8 @@
             "incidents/FalckIncidentsController.js",
             "incidents/FalckVehicleController.js",
             "incidents/VehiclePositionLayer.js",
-            "incidents/IncidentMarkerLayer.js"
+            "incidents/IncidentMarkerLayer.js",
+            "incidents/IncidentsDetailsWindow.js"
         ],
         "configSource": ["ConfigObject.js", "SelectionWindowConfig.js", "voertuiglocaties-config.js"],
         "closureCompilerSafe": true,

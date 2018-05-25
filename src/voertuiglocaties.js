@@ -12,6 +12,7 @@ Ext.define("viewer.components.voertuiglocaties", {
     voertuigId: null,
     map: null,
     basePath: null,
+    visible:null,
     imagePath: null,
     allVehicles: null,
     incidentVehicles: null,
@@ -20,7 +21,7 @@ Ext.define("viewer.components.voertuiglocaties", {
         this.initConfig(conf);
         viewer.components.Edit.superclass.constructor.call(this, this.config);
         var me = this;
-
+        me.visible = false;
         me.map = me.viewerController.mapComponent.getMap().getFrameworkMap();
 
         if (actionBeans && actionBeans["componentresource"]) {
@@ -36,10 +37,10 @@ Ext.define("viewer.components.voertuiglocaties", {
 
         this.renderButton({
             handler: function () {
-                me.showWindow();
+                me.onClick();
             },
             text: me.config.title,
-            icon: me.imagePath + "zwaailicht-uit.png",
+            icon: me.imagePath + "toggle-off.png",
             tooltip: me.config.tooltip,
             label: me.config.label
         });
@@ -51,8 +52,14 @@ Ext.define("viewer.components.voertuiglocaties", {
         me.loadWindow();
     },
 
-    showWindow: function () {
-        this.popup.show();
+    onClick: function () {
+        var me = this;
+        me.visible = !me.visible;
+        me.setIcon(me.visible);
+        this.vehicleController.setActive(me.visible);
+        this.vehicleController.positionLayer.layer.setVisibility(me.visible);
+        this.vehicleController.positionLayer.layer2.setVisibility(me.visible);
+        //this.popup.show();
     },
 
     loadWindow: function () {
@@ -110,12 +117,20 @@ Ext.define("viewer.components.voertuiglocaties", {
             ]
         });
     },
-
+    
+    setIcon: function(bool){
+        if(bool){
+            this.button.setIcon(this.imagePath + "toggle-on.png");
+        }else {
+            this.button.setIcon(this.imagePath + "toggle-off.png");
+        }
+    },
+    
     createController: function () {
         console.log("creating controller...");
         var me = this;
         if (me.config.falck) {
-            me.incidentController = Ext.create(viewer.voertuiglocaties.controllers.FalckIncidentsController, {'voertuiglocaties': this});
+            //me.incidentController = Ext.create(viewer.voertuiglocaties.controllers.FalckIncidentsController, {'voertuiglocaties': this});
             me.vehicleController = Ext.create(viewer.voertuiglocaties.controllers.FalckVehicleController, {'voertuiglocaties': this});
         } else if (me.config.mdt) {
 

@@ -88,7 +88,7 @@ Ext.define("viewer.voertuiglocaties.controllers.VehiclePositionLayer", {
     },
 
     displayFunction: function (feature) {
-        return feature.attributes.IncidentID === "" && feature.attributes.Speed <= 5 ? "none" : "visible";
+        return "visible";
     },
 
     features: function (features) {

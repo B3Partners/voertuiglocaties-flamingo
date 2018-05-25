@@ -8,6 +8,7 @@
 Ext.define("viewer.voertuiglocaties.controllers.FalckIncidentsController", {
     extend: "viewer.voertuiglocaties.controllers.Incidents",
     incidentMarkerLayer: null,
+    incidentsDetailWindow: null,
     incident: null,
 
     constructor: function (conf) {
@@ -15,6 +16,7 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckIncidentsController", {
         var me = this;
         viewer.voertuiglocaties.controllers.FalckIncidentsController.superclass.constructor.call(this, this.config);
         me.incidentMarkerLayer = Ext.create(viewer.voertuiglocaties.controllers.IncidentMarkerLayer, {'voertuiglocaties': me.config.voertuiglocaties});
+        me.incidentsDetailWindow = Ext.create(viewer.voertuiglocaties.controllers.IncidentsDetailsWindow, {'voertuiglocaties': me.config.voertuiglocaties});
 
         window.setInterval(function () {
             if (window.localStorage.getItem("voertuigId") === "") {
@@ -24,7 +26,7 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckIncidentsController", {
             } else {
                 me.getIncidentForVoertuig(window.localStorage.getItem("voertuigId"));
             }
-        }, 30000);
+        }, 5000);
     },
 
     getIncidents: function () {
@@ -32,10 +34,15 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckIncidentsController", {
         var me = this;
         Ext.Ajax.request({
             url: me.config.voertuiglocaties.serviceUrl + "incident",
-            headers: {'Authorization': me.config.voertuiglocaties.token},
+            //headers: {'Authorization': me.config.voertuiglocaties.token},
             success: function (result) {
-                var response = Ext.JSON.decode(result.responseText);
-                console.log(response);
+                if(result.responseText!== ""){
+                    var response = Ext.JSON.decode(result.responseText);
+                    console.log(response);
+                } else {
+                    console.log("Geen incidenten");
+                }
+                
             },
             failure: function (result) {
                 console.log(result);
@@ -83,7 +90,7 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckIncidentsController", {
                 console.log("Got incident data", incident);
                 me.config.voertuiglocaties.vehicleController.incidentFound(incident);
                 me.incidentMarkerLayer.addIncident(incident, false, true);
-
+                me.incidentsDetailWindow.updateInfo(incident);
             },
             failure: function (result) {
                 console.log(result);

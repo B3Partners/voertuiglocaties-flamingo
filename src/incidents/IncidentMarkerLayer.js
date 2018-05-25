@@ -10,9 +10,7 @@ Ext.define("viewer.voertuiglocaties.controllers.IncidentMarkerLayer", {
         this.initConfig(conf);
         var me = this;
         console.log("markerLayer");
-
         me.createLayer();
-
     },
 
     createLayer: function () {
@@ -86,8 +84,8 @@ Ext.define("viewer.voertuiglocaties.controllers.IncidentMarkerLayer", {
         return {x: x, y: y};
     },
 
-    markerClick: function () {
-        console.log("todo do something when bell clicked");
+    markerClick: function (marker, incident, archief) {
+        this.voertuiglocaties.incidentController.incidentsDetailWindow.showWindow(incident);
     },
 
     clear: function () {

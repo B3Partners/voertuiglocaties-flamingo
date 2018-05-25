@@ -18,12 +18,13 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
 
     getEenheidlocaties: function () {
         var me = this;
-        var url = "";
+        var url = me.config.voertuiglocaties.serviceUrl + "eenheidlocatie";
+        /*
         if ((window.localStorage.getItem("allVehicles") === 'true' && window.localStorage.getItem("incidentVehicles") === 'true') || window.localStorage.getItem("allVehicles") === 'true') {
             url = me.config.voertuiglocaties.serviceUrl + "eenheidlocatie";
         } else {
             url = me.config.voertuiglocaties.serviceUrl + "eenheidlocatie?extended=false";
-        }
+        }*/
         Ext.Ajax.request({
             url: url,
             headers: {'Authorization': me.config.voertuiglocaties.token},
@@ -50,7 +51,10 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
                 success: function (result) {
                     var response = Ext.JSON.decode(result.responseText);
                     console.log(response);
-                    features.push(response.features[0]);
+                    if(response.features.length > 0){
+                        features.push(response.features[0]);
+                    }
+                    
                 },
                 failure: function (result) {
                     console.log(result);
@@ -97,5 +101,18 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
             betrokkenEenheden.push(eenheid.Roepnaam);
         }
         me.getEenheidLocatieIncident(betrokkenEenheden);
+    },
+    
+    setActive: function(isActive){
+        console.log(isActive);
+        var me = this;
+        if(isActive){
+            me.getEenheidlocaties();
+            me.update = window.setInterval(function(){
+                me.getEenheidlocaties();
+            },15000);
+        } else{
+            window.clearInterval(me.update);
+        }
     }
 });
