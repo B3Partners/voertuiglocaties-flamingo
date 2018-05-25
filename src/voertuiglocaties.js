@@ -19,7 +19,7 @@ Ext.define("viewer.components.voertuiglocaties", {
 
     constructor: function (conf) {
         this.initConfig(conf);
-        viewer.components.Edit.superclass.constructor.call(this, this.config);
+        viewer.components.voertuiglocaties.superclass.constructor.call(this, this.config);
         var me = this;
         me.visible = false;
         me.map = me.viewerController.mapComponent.getMap().getFrameworkMap();
