@@ -8,6 +8,10 @@
 Ext.define("viewer.voertuiglocaties.controllers.VehiclePositionLayer", {
 
     constructor: function (conf) {
+        var script = document.createElement('script');
+        script.src = "https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js";
+        document.getElementsByTagName('head')[0].appendChild(script);
+
         OpenLayers.Renderer.symbol.pointer = [1, -7, 0, -9, -1, -7, 1, -7];
 
         this.initConfig(conf);
