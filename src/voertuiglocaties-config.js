@@ -28,6 +28,7 @@
 Ext.define("viewer.components.CustomConfiguration", {
     extend: "viewer.components.SelectionWindowConfig",
     constructor: function (parentId, configObject, configPage) {
+        var me = this;
         if (configObject === null) {
             configObject = {};
         }
@@ -51,12 +52,38 @@ Ext.define("viewer.components.CustomConfiguration", {
                 width: 500
             },
             {
-                xtype: 'textfield',
-                fieldLabel: 'Authenticatie token',
-                name: 'token',
-                value: this.configObject.token !== undefined ? this.configObject.token : "",
+                xtype: 'checkbox',
+                id: "allVehicles",
+                fieldLabel: 'Toon alle voertuigen',
+                name: 'allVehicles',
+                value: this.configObject.allVehicles !== undefined ? this.configObject.allVehicles : true,
                 labelWidth: this.labelWidth,
-                width: 500
+                listeners: {
+                    change: {
+                        fn: function(){
+                            if(Ext.getCmp('allVehicles').getValue()){
+                                Ext.getCmp('incidentVehicles').setValue(false);
+                            }                       
+                        }
+                    }
+                }
+            },
+            {
+                xtype: 'checkbox',
+                id: "incidentVehicles",
+                fieldLabel: 'Toon voertuigen met incident',
+                name: 'incidentVehicles',
+                value: this.configObject.incidentVehicles !== undefined ? this.configObject.incidentVehicles : false,
+                labelWidth: this.labelWidth,
+                listeners: {
+                    change: {
+                        fn: function(){
+                            if(Ext.getCmp('incidentVehicles').getValue()){
+                                Ext.getCmp('allVehicles').setValue(false);
+                            }  
+                        }
+                    }
+                }
             }
         ]);
     },
