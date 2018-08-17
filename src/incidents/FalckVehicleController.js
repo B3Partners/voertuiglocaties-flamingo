@@ -18,13 +18,14 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
 
     getEenheidlocaties: function () {
         var me = this;
-        var url = me.config.voertuiglocaties.serviceUrl + "eenheidlocatie";
-        /*
-        if ((window.localStorage.getItem("allVehicles") === 'true' && window.localStorage.getItem("incidentVehicles") === 'true') || window.localStorage.getItem("allVehicles") === 'true') {
-            url = me.config.voertuiglocaties.serviceUrl + "eenheidlocatie";
-        } else {
+        //var url = me.config.voertuiglocaties.serviceUrl + "eenheidlocatie";
+        
+        if (me.config.voertuiglocaties.config.incidentVehicles) {
             url = me.config.voertuiglocaties.serviceUrl + "eenheidlocatie?extended=false";
-        }*/
+            
+        } else {
+            url = me.config.voertuiglocaties.serviceUrl + "eenheidlocatie";
+        }
         Ext.Ajax.request({
             url: url,
             headers: {'Authorization': me.config.voertuiglocaties.token},
