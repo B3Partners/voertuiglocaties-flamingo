@@ -51,10 +51,26 @@ Ext.define("viewer.voertuiglocaties.controllers.VehiclePositionLayer", {
                         },
                         display: me.displayFunction,
                         graphic: function (feature) {
-                            if (feature.attributes.IncidentID === "") {
-                                return me.voertuiglocaties.imagePath + "zwaailicht-grijs.png";
+                            if (me.voertuiglocaties.vehicleStyling) {
+                                if (feature.attributes.statusCode === 4 || feature.attributes.statusCode === 6) {
+                                    return me.voertuiglocaties.imagePath + "zwaailicht-geel.png";
+                                } else if (feature.attributes.statusCode === 5) {
+                                    return me.voertuiglocaties.imagePath + "zwaailicht-blauw.png";
+                                } else if (feature.attributes.statusCode === 8) {
+                                    return me.voertuiglocaties.imagePath + "zwaailicht-donkergroen.png";
+                                } else if (feature.attributes.statusCode === 9) {
+                                    return me.voertuiglocaties.imagePath + "zwaailicht-groen.png";
+                                } else if (feature.attributes.statusCode === 11) {
+                                    return me.voertuiglocaties.imagePath + "zwaailicht-roodwit.png";
+                                }  else if (feature.attributes.statusCode === 15 || feature.attributes.statusCode === 16) {
+                                    return me.voertuiglocaties.imagePath + "zwaailicht-oranje.png";
+                                }
+                            } else {
+                                if (feature.attributes.IncidentID === "") {
+                                    return me.voertuiglocaties.imagePath + "zwaailicht-grijs.png";
+                                }
+                                return me.voertuiglocaties.imagePath + "zwaailicht-blauw.png";
                             }
-                            return me.voertuiglocaties.imagePath + "zwaailicht-uit.png";
                         }
                     }
                 })

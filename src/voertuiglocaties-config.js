@@ -84,6 +84,13 @@ Ext.define("viewer.components.CustomConfiguration", {
                         }
                     }
                 }
+            },
+            {
+                xtype: 'checkbox',
+                fieldLabel: 'Gebruik styling voor voertuiglocaties',
+                name: 'vehicleStyling',
+                value: this.configObject.vehicleStyling !== undefined ? this.configObject.vehicleStyling : false,
+                labelWidth: this.labelWidth,
             }
         ]);
     },
