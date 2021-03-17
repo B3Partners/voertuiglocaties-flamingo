@@ -31,7 +31,6 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
             headers: {'Authorization': me.config.voertuiglocaties.token},
             success: function (result) {
                 var response = Ext.JSON.decode(result.responseText);
-                console.log(response);
                 me.updateVehicles(response.features);
             },
             failure: function (result) {
@@ -41,7 +40,6 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
     },
 
     getEenheidLocatieIncident: function (betrokkenEenheden) {
-        console.log("Betrokken eenheden", betrokkenEenheden);
         var me = this;
         var features = [];
         for (var i = 0; i < betrokkenEenheden.length; i++) {
@@ -51,11 +49,9 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
                 async: false,
                 success: function (result) {
                     var response = Ext.JSON.decode(result.responseText);
-                    console.log(response);
                     if(response.features.length > 0){
                         features.push(response.features[0]);
                     }
-                    
                 },
                 failure: function (result) {
                     console.log(result);
@@ -68,7 +64,6 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
     updateVehicles: function (features) {
         var me = this;
         var transformedFeatures = me.transformFeaturesForVehiclePositionLayer(features);
-        console.log("transformedEenheden: ", transformedFeatures);
         me.positionLayer.features(transformedFeatures);
     },
 
@@ -94,7 +89,6 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
     },
 
     incidentFound: function (incidenten) {
-        console.log("incidenten: ", incidenten);
         var betrokkenEenheden = [];
         var me = this;
         for (var i = 0; i < incidenten.BetrokkenEenheden.length; i++) {
@@ -105,9 +99,11 @@ Ext.define("viewer.voertuiglocaties.controllers.FalckVehicleController", {
     },
     
     setActive: function(isActive){
-        console.log(isActive);
         var me = this;
         if(isActive){
+            me.voertuiglocaties.map.addLayer(me.positionLayer.layer);
+            me.voertuiglocaties.map.addLayer(me.positionLayer.layer2);
+
             me.getEenheidlocaties();
             me.update = window.setInterval(function(){
                 me.getEenheidlocaties();

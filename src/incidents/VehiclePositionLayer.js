@@ -8,10 +8,6 @@
 Ext.define("viewer.voertuiglocaties.controllers.VehiclePositionLayer", {
 
     constructor: function (conf) {
-        var script = document.createElement('script');
-        script.src = "https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js";
-        document.getElementsByTagName('head')[0].appendChild(script);
-
         OpenLayers.Renderer.symbol.pointer = [1, -7, 0, -9, -1, -7, 1, -7];
 
         this.initConfig(conf);
@@ -97,15 +93,9 @@ Ext.define("viewer.voertuiglocaties.controllers.VehiclePositionLayer", {
                 })
             })
         });
-        this.layer.setVisibility(true);
-        this.layer2.setVisibility(true);
-
-        me.voertuiglocaties.map.addLayer(this.layer);
-        me.voertuiglocaties.map.addLayer(this.layer2);
-
     },
 
-    displayFunction: function (feature) {
+    displayFunction: function () {
         return "visible";
     },
 
@@ -122,7 +112,5 @@ Ext.define("viewer.voertuiglocaties.controllers.VehiclePositionLayer", {
             features2.push(f.clone());
         });
         this.layer2.addFeatures(features2);
-        this.layer.setZIndex(1001);
-        this.layer2.setZIndex(1001);
     }
 });

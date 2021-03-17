@@ -4,6 +4,7 @@
         "name": "voertuiglocaties",
         "shortName": "VL",
         "sources": [
+	        "libs/jquery-1.11.0/jquery-1.11.0.min.js",
             "Component.js",
             "voertuiglocaties.js",
             "incidents/Incidents.js",
